@@ -96,7 +96,7 @@ def eval_genomes(genomes, config):
 
         for x, bird in enumerate(birds):
             bird.move()
-            ge[x].fitness += 0.02
+            ge[x].fitness += 0.1
 
             output = nets[x].activate(
                 (bird.y, abs(bird.y - pipes[pipe_ind].height), abs(bird.y - pipes[pipe_ind].bottom)))
@@ -109,7 +109,7 @@ def eval_genomes(genomes, config):
         for pipe in pipes:
             for x, bird in enumerate(birds):
                 if pipe.crash(bird):
-                    ge[x].fitness -= 0.5
+                    ge[x].fitness -= 0.8
                     birds.pop(x)
                     nets.pop(x)
                     ge.pop(x)
@@ -126,7 +126,7 @@ def eval_genomes(genomes, config):
         if add_pipe:
             score += 1
             for g in ge:
-                g.fitness += 1
+                g.fitness += 3
             pipes.append(Pipe(600))
 
         for r in rem:
