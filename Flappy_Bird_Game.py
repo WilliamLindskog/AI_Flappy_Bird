@@ -96,7 +96,7 @@ def eval_genomes(genomes, config):
 
         for x, bird in enumerate(birds):
             bird.move()
-            ge[x].fitness += 0.1
+            ge[x].fitness += 0.02
 
             output = nets[x].activate(
                 (bird.y, abs(bird.y - pipes[pipe_ind].height), abs(bird.y - pipes[pipe_ind].bottom)))
@@ -109,7 +109,7 @@ def eval_genomes(genomes, config):
         for pipe in pipes:
             for x, bird in enumerate(birds):
                 if pipe.crash(bird):
-                    ge[x].fitness -= 1
+                    ge[x].fitness -= 0.5
                     birds.pop(x)
                     nets.pop(x)
                     ge.pop(x)
@@ -126,7 +126,7 @@ def eval_genomes(genomes, config):
         if add_pipe:
             score += 1
             for g in ge:
-                g.fitness += 5
+                g.fitness += 1
             pipes.append(Pipe(600))
 
         for r in rem:
@@ -145,7 +145,7 @@ def eval_genomes(genomes, config):
         draw_window(win, birds, pipes, ground, score, Generation)
 
         # break if score gets too big
-        if score > 30:
+        if score > 15:
             pickle.dump(nets[0], open("best.pickle", "wb"))
             break
 
@@ -176,7 +176,6 @@ def run(configure_pathway):
 
 # Determine path to configuration file.
 if __name__ == "__main__":
-
     local_dir = os.path.dirname(__file__)
     config_path = os.path.join(local_dir, "config-feedforward.txt")
     run(config_path)
